@@ -1,0 +1,164 @@
+:root {
+    --bg: #444654;
+    --bg-user: #343541;
+    --bg-input: #353740;
+    --bg-input-text: #40414f;
+    --bg-side: #202123;
+    --bg-side-selected: #2b2c2f;
+    --color-fg: #fff;
+    --color-input: #fff;
+    --color-gpt: #fff;
+    --color-user: #fff;
+    --color-disclaimer: #d9d9e3;
+    --color-empty-chat: #565869;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: minmax(100px, 1fr) 5fr;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.mode-selector {
+    grid-row: span 2;
+    background: var(--bg-side);
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.mode-selector h1 {
+    color: var(--color-fg);
+    display: block;
+    text-align: center;
+}
+
+.mode-selector .modes {
+    overflow-y: auto;
+}
+
+.mode-selector .mode span {
+    display: block;
+    width: 80%;
+    margin: 0 auto 20px auto;
+    padding: 10px 16px;
+    color: var(--color-fg);
+    border: 1px solid hsla(0,0%,100%,.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.mode-selector .mode input[type="radio"] {
+    display: none;
+}
+
+.mode-selector .mode input[type="radio"]:hover + span,
+.mode-selector .mode input[type="radio"]:checked + span {
+    background: var(--bg-side-selected);
+}
+
+.conversation {
+    background: var(--bg);
+}
+
+.conversation .message {
+    padding: 24px 16px;
+}
+
+.conversation .message.user {
+    background: var(--bg-user);
+}
+
+.conversation .message .text {
+    max-width: 48rem;
+    display: block;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+.conversation .message.gpt .text {
+    color: var(--color-gpt);
+}
+
+.conversation .message.user .text {
+    color: var(--color-user);
+}
+
+.conversation .empty-conversation-filler {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-empty-chat);
+    font-size: 30px;
+}
+
+.conversation #conversation-content:empty + .empty-conversation-filler {
+    display: flex;
+}
+
+.input {
+    background: var(--bg-input);
+    padding-top: 30px;
+}
+
+.input .inner-input {
+    position: relative;
+    max-width: 48rem;
+    margin: 0 auto;
+    display: block;
+    box-shadow: var(--tw-ring-offset-shadow,0 0 transparent);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.input #prompt-input {
+    overflow-y: auto;  /* Hide vertical scrollbar */
+    resize: none;        /* Disable textarea resizing */
+    width: 100%;         /* Set width to 100% */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    max-height: 20vh;
+    padding: 10px 50px 10px 16px;
+    background: var(--bg-input-text);
+    color: var(--color-input);
+    outline: none;
+    border: none;
+    font-size: 16px;
+}
+
+.input #send-button {
+    position: absolute;
+    right: 16px;
+    bottom: 10px;
+    pointer-events: none;
+    cursor: default;
+}
+
+.input #send-button svg path {
+    stroke: var(--color-input);
+}
+
+.input #prompt-input:not(:placeholder-shown) ~ #send-button {
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.input .disclaimer {
+    font-size: .75rem;
+    line-height: 1rem;
+    color: var(--color-disclaimer) !important;
+    text-align: center;
+    display: block;
+    padding: .75rem 0 1.5rem 0;
+}
+
+.input .disclaimer a {
+    color: var(--color-disclaimer) !important;
+}
