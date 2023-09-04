@@ -32,6 +32,13 @@ function create_message(text, role) {
     );
 }
 
+function scrollBottom() {
+    let d = $(".conversation");
+    d.animate({
+        scrollTop: d.prop("scrollHeight")
+    }, 1000);
+}
+
 $(document).ready(function () {
 
     function setUrlParameter(paramName, paramValue) {
@@ -92,7 +99,10 @@ $(document).ready(function () {
 
         adjustTextareaHeight();
 
+        scrollBottom();
+
         $("#conversation-content").addClass("loading");
+
         sending = true;
 
         $.ajax({
@@ -106,9 +116,13 @@ $(document).ready(function () {
             success: function (response) {
                 sending = false;
                 messages.push(response);
-                $("#conversation-content").append(
-                    create_message(response.content, "gpt")
-                ).removeClass("loading");
+                $("#conversation-content")
+                    .append(
+                        create_message(response.content, "gpt")
+                    )
+                    .removeClass("loading");
+
+                scrollBottom();
             }
         });
     }

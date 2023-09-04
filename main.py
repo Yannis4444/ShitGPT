@@ -46,8 +46,6 @@ def main():
         mode = request.json.get('mode', '')
         messages = request.json.get('messages', '')
 
-        logging.info(f"prompting {mode} - {messages}")
-
         result = prompt(modes[mode]["system_msg"], messages)
         return jsonify(result)
 
