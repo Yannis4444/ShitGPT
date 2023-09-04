@@ -26,8 +26,6 @@ def prompt(system_msg: str, messages: List[Dict[str, str]]) -> Dict[str, str]:
 
 
 def main():
-    openai.api_key = os.environ.get("OPENAI_KEY")
-
     with open('modes.json', 'r') as file:
         modes = json.load(file)
 

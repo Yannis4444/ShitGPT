@@ -12,7 +12,7 @@ COPY templates/ templates/
 COPY static/ static/
 COPY modes.json .
 
-ENV OPENAI_KEY="your_key"
+ENV OPENAI_API_KEY="your_key"
 
 EXPOSE 80
 
