@@ -67,6 +67,7 @@ $(document).ready(function () {
         var button = $('.modes input[type="radio"][value="' + mode + '"]');
         button.prop("checked", true);
         $(".current-model-name").text(button.data("modeName"));
+        $('head title').text(button.data("modeName"));
         $(".mode-selector").removeClass("shown");
     }
 
@@ -122,7 +123,6 @@ $(document).ready(function () {
 
     function adjustTextareaHeight() {
         // Adjust the height based on the scroll height
-        $('#prompt-input').css('height', 'auto'); // Reset height to auto
         $('#prompt-input').css('height', $('#prompt-input').prop('scrollHeight') + 'px');
     }
 
@@ -141,11 +141,11 @@ $(document).ready(function () {
 
     $("#prompt-input").focus();
 
-    adjustTextareaHeight();
-
     mode = getUrlParameter("mode");
     if (mode === null) {
         mode = "shit";
     }
-    setMode(mode)
+    setMode(mode);
+
+    adjustTextareaHeight();
 });
