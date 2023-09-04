@@ -5,10 +5,12 @@
     --bg-input-text: #40414f;
     --bg-side: #202123;
     --bg-side-selected: #2b2c2f;
+    --bg-code-block-header: #343541;
     --color-fg: #fff;
     --color-input: #fff;
     --color-gpt: #fff;
     --color-user: #fff;
+    --color-code: #ccc;
     --color-disclaimer: #d9d9e3;
     --color-empty-chat: #565869;
 }
@@ -23,12 +25,14 @@ body, html {
 main {
     display: grid;
     grid-template-rows: 1fr auto;
-    grid-template-columns: minmax(100px, 1fr) 5fr;
+    grid-template-columns: minmax(250px, 1fr) 5fr;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
     width: 100vw;
     height: 100vh;
     font-family: 'Open Sans', sans-serif;
+    background: var(--bg-side);
 }
 
 .mode-selector {
@@ -76,27 +80,37 @@ main {
 }
 
 .conversation .message {
-    padding: 24px 16px;
-}
-
-.conversation .message.user {
-    background: var(--bg-user);
-}
-
-.conversation .message .text {
-    max-width: 48rem;
-    display: block;
-    margin: 0 auto;
+    padding: 24px 16px 12px 16px;
     font-size: 16px;
     line-height: 28px;
 }
 
-.conversation .message.gpt .text {
+.conversation .message.gpt {
     color: var(--color-gpt);
 }
 
-.conversation .message.user .text {
+.conversation .message.user {
+    background: var(--bg-user);
     color: var(--color-user);
+}
+
+.conversation .message > * {
+    max-width: 48rem;
+    display: block;
+    margin: 0 auto 12px auto;
+}
+
+.conversation .message code {
+    display: block;
+    overflow-x: auto;
+    background: #000;
+    color: #eaeaea;
+    padding: .5em 1em;
+    border-radius: 8px;
+}
+.conversation .message code {
+    font-size: 12px;
+    color: var(--color-code);
 }
 
 .conversation .empty-conversation-filler {
@@ -107,6 +121,7 @@ main {
     align-items: center;
     color: var(--color-empty-chat);
     font-size: 30px;
+    overflow: hidden;
 }
 
 .conversation #conversation-content:empty + .empty-conversation-filler {
@@ -192,10 +207,11 @@ main {
 
 
 /* Media query for screens smaller than 800px */
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     main {
         grid-template-rows: 1fr auto;
         grid-template-columns: 1fr;
+        padding-top: 50px;
     }
 
     .mode-selector {

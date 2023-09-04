@@ -10,13 +10,30 @@ $(document).ready(function () {
     });
 });
 
+const {markedHighlight} = globalThis.markedHighlight
+
+const custom_marked = new marked.Marked(
+    markedHighlight({
+        langPrefix: 'hljs language-',
+        highlight(code, lang) {
+            const language = hljs.getLanguage(lang) ? lang : null;
+
+            if (language) {
+                return hljs.highlight(code, {language}).value;
+            }
+            return hljs.highlightAuto(code).value;
+        }
+    })
+);
+
 function create_message(text, role) {
     return $('<div class="message ' + role + '">').append(
-        $('<p class="text">').text(text)
+        custom_marked.parse(text, {sanitize: true})
     );
 }
 
 $(document).ready(function () {
+
     function setUrlParameter(paramName, paramValue) {
         var url = window.location.href;
         var re = new RegExp("([?&])" + paramName + "=.*?(&|$)", "i");
@@ -50,6 +67,7 @@ $(document).ready(function () {
         var button = $('.modes input[type="radio"][value="' + mode + '"]');
         button.prop("checked", true);
         $(".current-model-name").text(button.data("modeName"));
+        $(".mode-selector").removeClass("shown");
     }
 
     function prompt() {
@@ -86,7 +104,6 @@ $(document).ready(function () {
             }),
             success: function (response) {
                 sending = false;
-                console.log(response)
                 messages.push(response);
                 $("#conversation-content").append(
                     create_message(response.content, "gpt")
