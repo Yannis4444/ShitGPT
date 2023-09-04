@@ -12,34 +12,44 @@
     <script src="{{url_for('static', filename='js/index.js')}}"></script>
 </head>
 <body>
-<div class="mode-selector">
-    <h1>ShitGPT</h1>
-    <div class="modes">
-        {% for mode in modes %}
-        <label class="mode">
-            <input type="radio" name="mode" value="{{ mode.id }}" data-mode-name="{{ mode.name }}">
-            <span title="{{ mode.system_msg }}">{{ mode.name }}</span>
-        </label>
-        {% endfor %}}
+<main>
+    <div class="mode-selector">
+        <h1>ShitGPT</h1>
+        <div class="modes">
+            {% for mode in modes %}
+            <label class="mode">
+                <input type="radio" name="mode" value="{{ mode.id }}" data-mode-name="{{ mode.name }}">
+                <span title="{{ mode.system_msg }}">{{ mode.name }}</span>
+            </label>
+            {% endfor %}
+        </div>
     </div>
-</div>
-<div class="conversation">
-    <div id="conversation-content"></div>
-    <div class="empty-conversation-filler">
-        <h1 class="current-model-name">ShitGPT</h1>
+    <div class="conversation">
+        <div id="conversation-content"></div>
+        <div class="empty-conversation-filler">
+            <h1 class="current-model-name">ShitGPT</h1>
+        </div>
     </div>
-</div>
-<div class="input">
-    <div class="inner-input">
-        <textarea id="prompt-input" rows="1" placeholder="Send a message"></textarea>
-        <span id="send-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 14l11 -11" />
-                <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
-            </svg>
-        </span>
+    <div class="input">
+        <div class="inner-input">
+            <textarea id="prompt-input" rows="1" placeholder="Send a message"></textarea>
+            <span id="send-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 14l11 -11"/>
+                    <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"/>
+                </svg>
+            </span>
+        </div>
+        <label class="disclaimer">ShitGPT will produce inaccurate information about people, places, or facts. It is <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">absolutely useless</a>.</label>
     </div>
-    <label class="disclaimer">ShitGPT will produce inaccurate information about people, places, or facts. It is <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">absolutely useless</a>.</label>
-</div>
+</main>
+<span class="mode-selector-toggle">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 6l16 0"/>
+        <path d="M4 12l16 0"/>
+        <path d="M4 18l16 0"/>
+    </svg>
+</span>
 </body>
 </html>

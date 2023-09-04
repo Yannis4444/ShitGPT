@@ -1,5 +1,6 @@
 let messages = [];
 let mode;
+let sending = false;
 
 $(document).ready(function () {
     $('#prompt-input').on('keypress', function (e) {
@@ -52,6 +53,10 @@ $(document).ready(function () {
     }
 
     function prompt() {
+        if (sending) {
+            return;
+        }
+
         let input = $("#prompt-input");
         let prompt = input.val();
         input.val('');
@@ -68,6 +73,9 @@ $(document).ready(function () {
 
         adjustTextareaHeight();
 
+        $("#conversation-content").addClass("loading");
+        sending = true;
+
         $.ajax({
             url: '/prompt',
             method: 'POST',
@@ -77,14 +85,19 @@ $(document).ready(function () {
                 messages: messages
             }),
             success: function (response) {
+                sending = false;
                 console.log(response)
                 messages.push(response);
                 $("#conversation-content").append(
                     create_message(response.content, "gpt")
-                );
+                ).removeClass("loading");
             }
         });
     }
+
+    $(".mode-selector-toggle").on("click", function () {
+        $(".mode-selector").toggleClass("shown");
+    })
 
     $('.modes input[type="radio"]').on('change', function () {
         setMode($(this).val());
@@ -99,10 +112,6 @@ $(document).ready(function () {
     $('#prompt-input').on('input', adjustTextareaHeight); // Adjust height on input
 
     $('#prompt-input').on('keypress', function (e) {
-        // if (e.which == 13) {  // Enter key pressed
-        //     prompt();
-        // }
-
         if (e.keyCode == 13 && !e.shiftKey) {  // Enter key pressed without Shift
             e.preventDefault();  // Prevent default action (newline)
             prompt();

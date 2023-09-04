@@ -51,13 +51,6 @@ def main():
         result = prompt(modes[mode]["system_msg"], messages)
         return jsonify(result)
 
-    # mode = "shit"
-    #
-    # conversation = Conversation(modes[mode]["system_msg"])
-    #
-    # while True:
-    #     print(conversation.prompt(input()))
-
     app.run(debug=True)
 
 

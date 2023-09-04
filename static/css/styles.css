@@ -13,14 +13,21 @@
     --color-empty-chat: #565869;
 }
 
-body {
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+main {
     display: grid;
     grid-template-rows: 1fr auto;
     grid-template-columns: minmax(100px, 1fr) 5fr;
-    width: 100vw;
-    height: 100vh;
     margin: 0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -44,6 +51,7 @@ body {
 .mode-selector .mode span {
     display: block;
     width: 80%;
+    box-sizing: border-box;
     margin: 0 auto 20px auto;
     padding: 10px 16px;
     color: var(--color-fg);
@@ -64,6 +72,7 @@ body {
 
 .conversation {
     background: var(--bg);
+    overflow-y: auto;
 }
 
 .conversation .message {
@@ -102,6 +111,15 @@ body {
 
 .conversation #conversation-content:empty + .empty-conversation-filler {
     display: flex;
+}
+
+.conversation #conversation-content.loading:after {
+    content: 'loading...';
+    display: block;
+    color: var(--color-fg);
+    font-size: 12px;
+    text-align: center;
+    padding: 10px;
 }
 
 .input {
@@ -161,4 +179,42 @@ body {
 
 .input .disclaimer a {
     color: var(--color-disclaimer) !important;
+}
+
+.mode-selector-toggle {
+    display: none; /* Initially hide the button */
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 200;
+    cursor: pointer;
+}
+
+
+/* Media query for screens smaller than 800px */
+@media (max-width: 800px) {
+    main {
+        grid-template-rows: 1fr auto;
+        grid-template-columns: 1fr;
+    }
+
+    .mode-selector {
+        display: none;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        z-index: 100;
+    }
+
+    .mode-selector.shown {
+        display: block;
+    }
+
+    .mode-selector .modes {
+        height: inherit;
+    }
+
+    .mode-selector-toggle {
+        display: block; /* Show the toggle button */
+    }
 }
