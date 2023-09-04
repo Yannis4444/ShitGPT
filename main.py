@@ -1,12 +1,11 @@
 import json
 import logging
+import os
 from typing import List, Dict
 
 from flask import Flask, render_template, request, jsonify
 
 import openai
-
-from conversation import Conversation
 
 
 def prompt(system_msg: str, messages: List[Dict[str, str]]) -> Dict[str, str]:
@@ -27,7 +26,7 @@ def prompt(system_msg: str, messages: List[Dict[str, str]]) -> Dict[str, str]:
 
 
 def main():
-    openai.api_key_path = "key.txt"
+    openai.api_key = os.environ.get("OPENAI_KEY")
 
     with open('modes.json', 'r') as file:
         modes = json.load(file)
@@ -49,7 +48,7 @@ def main():
         result = prompt(modes[mode]["system_msg"], messages)
         return jsonify(result)
 
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=80)
 
 
 if __name__ == '__main__':
