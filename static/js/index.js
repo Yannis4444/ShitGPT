@@ -40,7 +40,6 @@ function scrollBottom() {
 }
 
 $(document).ready(function () {
-
     function setUrlParameter(paramName, paramValue) {
         var url = window.location.href;
         var re = new RegExp("([?&])" + paramName + "=.*?(&|$)", "i");
@@ -68,10 +67,10 @@ $(document).ready(function () {
 
     function setMode(m) {
         mode = m;
-        messages = [];
         $("#conversation-content").html("");
         setUrlParameter("mode", mode);
         var button = $('.modes input[type="radio"][value="' + mode + '"]');
+        messages = [{"role": "system", "content": button.data("systemMsg")}];
         button.prop("checked", true);
         $(".current-model-name").text(button.data("modeName"));
         $('head title').text(button.data("modeName"));
@@ -110,7 +109,6 @@ $(document).ready(function () {
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                mode: mode,
                 messages: messages
             }),
             success: function (response) {

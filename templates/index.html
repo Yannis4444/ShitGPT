@@ -32,7 +32,7 @@
         <div class="modes">
             {% for mode in modes %}
             <label class="mode">
-                <input type="radio" name="mode" value="{{ mode.id }}" data-mode-name="{{ mode.name }}">
+                <input type="radio" name="mode" value="{{ mode.id }}" data-mode-name="{{ mode.name }}" data-system-msg="{{ mode.system_msg }}">
                 <span title="{{ mode.system_msg }}">{{ mode.name }}</span>
             </label>
             {% endfor %}

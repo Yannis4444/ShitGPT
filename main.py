@@ -8,18 +8,17 @@ from flask import Flask, render_template, request, jsonify
 import openai
 
 
-def prompt(system_msg: str, messages: List[Dict[str, str]]) -> Dict[str, str]:
+def prompt(messages: List[Dict[str, str]]) -> Dict[str, str]:
     """
     Prompts chatgpt with the given messages
 
-    :param system_msg: The system message
     :param messages: The list of messages and answers to send
     :return: The response
     """
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "system", "content": system_msg}] + messages,
+        messages=messages,
     )
 
     return response["choices"][0]["message"]
@@ -40,10 +39,9 @@ def main():
 
     @app.route('/prompt', methods=['POST'])
     def post_prompt():
-        mode = request.json.get('mode', '')
         messages = request.json.get('messages', '')
 
-        result = prompt(modes[mode]["system_msg"], messages)
+        result = prompt(messages)
         return jsonify(result)
 
     app.run(host="0.0.0.0", port=80)
