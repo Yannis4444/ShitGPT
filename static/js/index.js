@@ -54,6 +54,8 @@ function newChat() {
     }
     current_chat_id = null;
     $("#conversation-content").html("");
+
+    $(".sidebar").removeClass("shown");
 }
 
 function saveCurrentChat() {
@@ -119,6 +121,8 @@ function loadChat(id) {
 
     $("#chat-list .chat.selected").removeClass("selected");
     $("#chat-list .chat[data-chat-id='" + id + "']").addClass("selected");
+
+    $(".sidebar").removeClass("shown");
 }
 
 function addChatToSide(chat) {
@@ -177,7 +181,6 @@ $(document).ready(function () {
         mode_name = button.data("modeName");
         // $(".current-model-name").text(mode_name);
         $('head title').text(mode_name);
-        $(".sidebar").removeClass("shown");
     }
 
     function prompt() {
