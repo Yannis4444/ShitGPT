@@ -55,6 +55,7 @@ function newChat() {
     current_chat_id = null;
     $("#conversation-content").html("");
 
+    $("#chat-list .chat.selected").removeClass("selected");
     $(".sidebar").removeClass("shown");
 }
 
@@ -83,6 +84,8 @@ function saveCurrentChat() {
         chats.push(info)
 
         localStorage.setItem("chats", JSON.stringify(chats));
+
+        addChatToSide(info, true);
     }
 
     localStorage.setItem(current_chat_id, JSON.stringify({
@@ -90,7 +93,6 @@ function saveCurrentChat() {
         messages: messages
     }));
 
-    addChatToSide(info);
 }
 
 function loadChat(id) {
@@ -125,10 +127,25 @@ function loadChat(id) {
     $(".sidebar").removeClass("shown");
 }
 
-function addChatToSide(chat) {
-    $("#chat-list").append(
-        $("<div class='chat' data-chat-id='" + chat.id + "'>").append(
-            $("<label>").text(chat.title)
+function addChatToSide(chat, active) {
+    $("#chat-list").prepend(
+        $("<div class='chat" + (active ? " selected" : "") + "' data-chat-id='" + chat.id + "'>").append(
+            $("<label>").text(chat.title),
+            $("<span class='delete'>").on("click", e => {
+                localStorage.removeItem(chat.id);
+
+                $("#chat-list .chat[data-chat-id='" + chat.id + "']").remove();
+
+                for (let i = 0; i < chats.length; i++) {
+                    if (chats[i].id === chat.id) {
+                        chats.splice(i, 1);
+                        localStorage.setItem("chats", JSON.stringify(chats));
+                        break;
+                    }
+                }
+
+                e.stopPropagation();
+            })
         ).on("click", () => {
             loadChat(chat.id);
         })
@@ -143,7 +160,7 @@ $(document).ready(function () {
     }
 
     chats.forEach(chat => {
-        addChatToSide(chat);
+        addChatToSide(chat, false);
     })
 
     function setUrlParameter(paramName, paramValue) {
