@@ -13,12 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/tomorrow-night-bright.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/java.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked-highlight/lib/index.umd.js"></script>
@@ -27,21 +21,25 @@
 </head>
 <body>
 <main>
-    <div class="mode-selector">
-        <h1>ShitGPT</h1>
-        <div class="modes">
-            {% for mode in modes %}
-            <label class="mode">
-                <input type="radio" name="mode" value="{{ mode.id }}" data-mode-name="{{ mode.name }}" data-system-msg="{{ mode.system_msg }}">
-                <span title="{{ mode.system_msg }}">{{ mode.name }}</span>
-            </label>
-            {% endfor %}
+    <div class="sidebar">
+        <div class="new-chat" onclick="newChat()">
+            <label>New Chat</label>
+        </div>
+        <div id="chat-list">
+            <label class="section-header">History</label>
         </div>
     </div>
     <div class="conversation">
         <div id="conversation-content"></div>
-        <div class="empty-conversation-filler">
-            <h1 class="current-model-name">ShitGPT</h1>
+        <div class="mode-selector">
+            <div class="modes">
+                {% for mode in modes %}
+                <label class="mode">
+                    <input type="radio" name="mode" value="{{ mode.id }}" data-mode-name="{{ mode.name }}" data-system-msg="{{ mode.system_msg }}">
+                    <span title="{{ mode.system_msg }}">{{ mode.name }}</span>
+                </label>
+                {% endfor %}
+            </div>
         </div>
     </div>
     <div class="input">
@@ -54,7 +52,7 @@
         <label class="disclaimer">ShitGPT will produce inaccurate information about people, places, or facts. It is <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">absolutely useless</a>.</label>
     </div>
 </main>
-<span class="mode-selector-toggle">
+<span class="sidebar-toggle">
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <path d="M4 6l16 0"/>
