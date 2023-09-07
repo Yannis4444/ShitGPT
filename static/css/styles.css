@@ -80,7 +80,7 @@ main {
 }
 
 .sidebar .new-chat:hover {
-    background: var(--bg-side-new-chat-hover);
+    background-color: var(--bg-side-new-chat-hover);
 }
 
 .sidebar #chat-list {
